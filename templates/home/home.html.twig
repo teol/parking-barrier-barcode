@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+    @import 'https://fonts.googleapis.com/css?family=Open+Sans';
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: radial-gradient(#eee, #668);
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #date {
+        background: rgba(0, 0, 0, 0.1);
+        color: #fff;
+        font-family: "Open Sans", sas-serif;
+        font-size: 2em;
+        padding: 0.5em;
+        text-align: center;
+    }
+
+    #clock {
+        align-items: center;
+        -webkit-align-items: center;
+        display: flex;
+        display: -webkit-flex;
+        height: 130px;
+        justify-content: space-around;
+        -webkit-justify-content: space-around;
+        left: calc(50% - 300px);
+        position: absolute;
+        top: calc(50% - 65px);
+        width: 600px;
+    }
+
+    .unit {
+        background: linear-gradient(#aaa, #777);
+        border-radius: 15px;
+        box-shadow: 0 2px 2px #444;
+        color: #fff;
+        font-family: "Open Sans", sans-serif;
+        font-size: 5em;
+        height: 100%;
+        line-height: 130px;
+        margin: 0 10px;
+        text-align: center;
+        text-shadow: 0 2px 2px #666;
+        width: 23%;
+    }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <title>Hello, world!</title>
+
+</head>
+
+<body>
+    <p id="date"></p>
+    <div id="clock">
+        <p class="unit" id="hours"></p>
+        <p class="unit" id="minutes"></p>
+        <p class="unit" id="seconds"></p>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 text-center">
+                <h1>Leaving from work ?</h1>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-4 text-center">
+                <a href="{{ path('generate_pdf') }}" class="btn btn-dark btn-lg" style="font-size:60px;">Generate PDF</a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{{ path('generate_email') }}" class="btn btn-light btn-lg" style="font-size:60px;">Email me</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var $dOut = $('#date'),
+        $hOut = $('#hours'),
+        $mOut = $('#minutes'),
+        $sOut = $('#seconds');
+        //$ampmOut = $('#ampm');
+    var months = [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    var days = [
+        'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+    ];
+
+    function update() {
+        var date = new Date();
+
+        var ampm = date.getHours() < 12 ?
+            'AM' :
+            'PM';
+
+        var hours = date.getHours();
+
+        var minutes = date.getMinutes() < 10 ?
+            '0' + date.getMinutes() :
+            date.getMinutes();
+
+        var seconds = date.getSeconds() < 10 ?
+            '0' + date.getSeconds() :
+            date.getSeconds();
+
+        var dayOfWeek = days[date.getDay()];
+        var month = months[date.getMonth()];
+        var day = date.getDate();
+        var year = date.getFullYear();
+
+        var dateString = dayOfWeek + ', ' + month + ' ' + day + ', ' + year;
+
+        $dOut.text(dateString);
+        $hOut.text(hours);
+        $mOut.text(minutes);
+        $sOut.text(seconds);
+        //$ampmOut.text(ampm);
+    }
+
+    update();
+    window.setInterval(update, 500);
+    </script>
+</body>
+</html>
