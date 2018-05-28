@@ -57,8 +57,9 @@ class Barcode
 
     public function generate()
     {
-        //return $this->generator->getBarcode(time(), $this->generator::TYPE_EAN_13);
-        return '<img src="data:image/png;base64,' . base64_encode($this->generator->getBarcode(time(), $this->generator::TYPE_EAN_13)) . '">';
+        //return $this->generator->getBarcode(time(), $this->generator::TYPE_INTERLEAVED_2_5);
+        $content = (int)'020802181445';
+        return '<img src="data:image/png;base64,' . base64_encode($this->generator->getBarcode($content, $this->generator::TYPE_INTERLEAVED_2_5)) . '">';
     }
 
     public function generateBarcode($type)
