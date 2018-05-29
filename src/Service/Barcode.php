@@ -1,19 +1,18 @@
 <?php
+
 namespace App\Service;
 
 /*
     https://github.com/picqer/php-barcode-generator
 */
-use Picqer\Barcode\BarcodeGeneratorSVG;
-use Picqer\Barcode\BarcodeGeneratorPNG;
-use Picqer\Barcode\BarcodeGeneratorJPG;
-use Picqer\Barcode\BarcodeGeneratorHTML;
 use Picqer\Barcode\BarcodeGenerator;
+use Picqer\Barcode\BarcodeGeneratorHTML;
+use Picqer\Barcode\BarcodeGeneratorJPG;
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\BarcodeGeneratorSVG;
 
 class Barcode
 {
-    protected $generator;
-
     public $types = [
         BarcodeGenerator::TYPE_CODE_39,
         BarcodeGenerator::TYPE_CODE_39_CHECKSUM,
@@ -45,6 +44,7 @@ class Barcode
         BarcodeGenerator::TYPE_MSI,
         BarcodeGenerator::TYPE_PHARMA_CODE_TWO_TRACKS,
     ];
+    protected $generator;
 
     protected $formats = [
 
@@ -52,21 +52,23 @@ class Barcode
 
     public function __construct()
     {
-        $this->generator = new BarcodeGeneratorPNG;
+        $this->generator = new BarcodeGeneratorPNG();
     }
 
     public function generate()
     {
-        //return $this->generator->getBarcode(time(), $this->generator::TYPE_INTERLEAVED_2_5);
-        $content = (int)'020802181445';
-        return '<img src="data:image/png;base64,' . base64_encode($this->generator->getBarcode($content, $this->generator::TYPE_INTERLEAVED_2_5)) . '">';
+        $today = new \DateTime();
+        $today->modify('+20minutes');
+        $content = $today->format('md') . '0' . str_replace('0', '', $today->format('Y')) . $today->format('Hi');
+
+        //$content = (int) '020802181445';
+
+        return '<img src="data:image/png;base64,' . base64_encode($this->generator->getBarcode($content, $this->generator::TYPE_INTERLEAVED_2_5, 1.5, 30)) . '">';
     }
 
     public function generateBarcode($type)
     {
     }
-
-
 
     public function generatePdf()
     {
