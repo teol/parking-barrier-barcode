@@ -52,7 +52,7 @@ class Barcode
 
     public function __construct()
     {
-        $this->generator = new BarcodeGeneratorPNG();
+        $this->generator = new BarcodeGeneratorJPG();
     }
 
     public function generate()
@@ -63,7 +63,7 @@ class Barcode
 
         //$content = (int) '020802181445';
 
-        return '<img src="data:image/png;base64,' . base64_encode($this->generator->getBarcode($content, $this->generator::TYPE_INTERLEAVED_2_5, 1.5, 30)) . '">';
+        return '<img src="data:image/jpeg;base64,' . base64_encode($this->generator->getBarcode($content, $this->generator::TYPE_INTERLEAVED_2_5, 1, 25)) . '">';
     }
 
     public function generateBarcode($type)
